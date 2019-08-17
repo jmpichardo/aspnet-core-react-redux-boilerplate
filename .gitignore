@@ -1,0 +1,7 @@
+[Oo]bj/
+[Bb]in/
+packages/
+.vs/
+.idea/
+node_modules/\nbower_components/
+*.user
