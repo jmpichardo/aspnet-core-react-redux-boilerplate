@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Renetdux.Infrastructure;
 using Renetdux.Infrastructure.Services.Logger;
 using System.Net;
 
@@ -32,6 +33,11 @@ namespace Renetdux.Extension
                     }
                 });
             });
+        }
+
+        public static void UseServiceDiscovery(this IApplicationBuilder app)
+        {
+            IoCContainerServiceProvider.ServiceProvider = app.ApplicationServices;
         }
 
         private class ErrorDetails

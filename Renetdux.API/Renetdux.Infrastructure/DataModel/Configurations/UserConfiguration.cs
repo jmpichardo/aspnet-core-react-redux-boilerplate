@@ -12,6 +12,8 @@ namespace Renetdux.Infrastructure.DataModel.Configurations
             builder.Property(d => d.Email).HasMaxLength(150).IsRequired();
 
             builder.Property(d => d.Password).HasMaxLength(512).IsRequired();
+
+            builder.Ignore(d => d.EncryptionService);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Renetdux.Controllers.Users.InputModels;
 using Renetdux.Controllers.Users.ViewModels;
 using Renetdux.Infrastructure.Commands.Users.Interfaces;
@@ -10,7 +11,7 @@ namespace Renetdux.Controllers.Users
 {
     [Route("api/v1/users")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         private readonly IGetUsersCommand _getUsersCommand;
         private readonly IGetUserCommand _getUserCommand;
@@ -26,9 +27,12 @@ namespace Renetdux.Controllers.Users
             _registerUserCommand = registerUserCommand;
         }
 
+        [Authorize]
         [HttpGet("")]
         public async Task<ActionResult<List<UserViewModel>>> GetUsers()
         {
+            var userIdFromClaims = GetUserId();
+
             var result = await _getUsersCommand.ExecuteAsync();
             if (!result.IsSuccessful)
                 return BadRequest(new ErrorViewModel(result.Error.Value.Code, result.Error.Value.Message));

@@ -8,6 +8,7 @@ namespace Renetdux.Infrastructure.Commands.Users
     {
         public static void AddUsersCommands(this IServiceCollection services)
         {
+            services.AddTransient<IGenerateJwtCommand, GenerateJwtCommand>();
             services.AddTransient<IGetUserCommand, GetUserCommand>();
             services.AddTransient<IGetUsersCommand, GetUsersCommand>();
             services.AddTransient<IRegisterUserCommand, RegisterUserCommand>();
