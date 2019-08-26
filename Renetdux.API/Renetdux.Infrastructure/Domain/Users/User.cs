@@ -12,6 +12,7 @@ namespace Renetdux.Infrastructure.Domain.Users
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Password { get; private set; }
+        public UserRoles UserRole { get; private set; }
 
         public string RefreshToken { get; private set; }
 
@@ -31,6 +32,7 @@ namespace Renetdux.Infrastructure.Domain.Users
             FirstName = firstName;
             LastName = lastName;
             Password = EncryptionService.HashPassword(password);
+            UserRole = UserRoles.Basic;
         }
     }
 }

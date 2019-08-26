@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Renetdux.Authorization;
 using Renetdux.Extension;
 using Renetdux.Infrastructure.Common;
 using Renetdux.Infrastructure.DataModel;
@@ -39,7 +40,10 @@ namespace Renetdux
             Configuration.Bind(config);
             services.AddSingleton(x => config);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(x =>
+            {
+                x.Filters.Add<CompanyAuthorizationFilter>();
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var secret = config.JwtSecret;
             var key = Encoding.ASCII.GetBytes(secret);

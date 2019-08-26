@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Renetdux.Authorization;
 using Renetdux.Controllers.Users.InputModels;
 using Renetdux.Controllers.Users.ViewModels;
 using Renetdux.Infrastructure.Commands.Users.Interfaces;
+using Renetdux.Infrastructure.Domain.Users;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Renetdux.Controllers.Users
             _registerUserCommand = registerUserCommand;
         }
 
-        [Authorize]
+        [Roles(UserRoles.Admin)]
         [HttpGet("")]
         public async Task<ActionResult<List<UserViewModel>>> GetUsers()
         {
@@ -40,6 +41,7 @@ namespace Renetdux.Controllers.Users
             return new List<UserViewModel>(result.Result.Select(u => new UserViewModel(u)));
         }
 
+        [Roles(UserRoles.Basic)]
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserViewModel>> GetUser([FromRoute]int userId)
         {
