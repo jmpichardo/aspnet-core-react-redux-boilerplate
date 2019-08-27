@@ -1,0 +1,30 @@
+@import '../../styles/colors.scss';
+
+.app {
+  text-align: center;
+  background-color: $base-color;
+  color: $text-color;
+  min-height: 100vh;
+}
+
+.content {
+  margin: 10px;
+}
+
+.nav-bar {
+  background-color: $nav-bar-color;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: $link-color;
+
+  &__item {
+    margin: 10px 5px;
+
+    a {
+      color: $link-color;
+    }
+  }
+}
