@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const UserGreeting = (props) => {
   const { username } = props;
@@ -9,13 +10,13 @@ const AnonymousGreeting = () => {
   return <p>Please login to continue...</p>
 }
 
-const Home = (props) => {
-  const { username } = props;
+const Home = ({ auth }) => {
+  const { username } = auth;
 
   return (
     <div>
       { username ? 
-        <UserGreeting />
+        <UserGreeting username={username} />
       :
         <AnonymousGreeting />
       }
@@ -24,4 +25,9 @@ const Home = (props) => {
   )
 }
 
-export default Home;
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, null)(Home);

@@ -4,3 +4,5 @@ Boilerplate for ASP.Net Core API + React + Redux including authentication
 WIP!!!
 
 Come back later...
+
+Redux Starter Kit used.

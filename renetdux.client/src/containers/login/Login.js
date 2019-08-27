@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { login } from '../../slices/authSlice';
 import './Login.scss';
 
-const Login = () => {
+const Login = ({ login }) => {
+
+  const [nameText, setNameText] = useState('');
+  const onChangeName = e => setNameText(e.target.value);
+
+  const [passwordText, setPasswordText] = useState('');
+  const onChangePassword = e => setPasswordText(e.target.value);
+
   return (
     <div>
-      <form className="login-form">
+      <form className="login-form" onSubmit={e => {
+          e.preventDefault()
+          if (!nameText.trim()) {
+            return
+          }
+          login(nameText, passwordText);
+        }}>
         <div>
-          <label for="email">Email</label>
-          <input type="text" placeholder="Enter Email" name="email" required />
+          <label htmlFor="email">Email</label>
+          <input type="text" name="email" placeholder="Enter Email" value={nameText} onChange={onChangeName} required />
         </div>
         <div>
-          <label for="psw">Password</label>
-          <input type="password" placeholder="Enter Password" name="psw" required />
+          <label htmlFor="psw">Password</label>
+          <input type="password" name="psw" placeholder="Enter Password" value={passwordText} onChange={onChangePassword} required />
         </div>
         <button type="submit">Login</button>
       </form>
@@ -19,4 +34,6 @@ const Login = () => {
   );
 }
 
-export default Login;
+const mapDispatch = { login }
+
+export default connect(null, mapDispatch)(Login);
