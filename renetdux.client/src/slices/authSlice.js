@@ -50,6 +50,6 @@ export function login(email, password) {
   }
 }
 
-export const { loginBegin, loginSuccess, loginError } = authSlice.actions;
+export const { loginBegin, loginSuccess, loginError, logout } = authSlice.actions;
 
 export default authSlice.reducer;
