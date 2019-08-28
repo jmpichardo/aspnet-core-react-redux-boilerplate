@@ -1,5 +1,5 @@
 import { createSlice } from "redux-starter-kit";
-import { apiGet } from "../common/apiUtils";
+import { apiPost } from "../common/apiUtils";
 
 const authSlice = createSlice({
   slice: 'auth',
@@ -24,7 +24,12 @@ const authSlice = createSlice({
 export function login(email, password) {
   return dispatch => {
     dispatch(loginBegin());
-    apiGet("api/v1/users")
+    apiPost('token', {
+      grant_type: 'password',
+      username: email,
+      password: password,
+      refresh_token: ""
+    })
       .then((response) => {
         dispatch(loginSuccess(response));
       })
