@@ -1,32 +1,39 @@
 import { createSlice } from "redux-starter-kit";
+import { apiGet } from "../common/apiUtils";
 
 const authSlice = createSlice({
   slice: 'auth',
   initialState: {
     username: '',
-    password: null,
-    loginOn: null
+    isLoading: false,
+    error: ''
   },
   reducers: {
-    login: {
-      reducer(state, action) { 
-        // This is the action
-        return { 
-          ...state, 
-          username: action.payload.name, 
-          password: action.payload.password,
-          loginOn: action.payload.loginOn } 
-      },
-      prepare(name, password) {
-        return { payload: { name, password, loginOn: new Date() } }
-      }
+    loginBegin(state) {
+      return { ...state, isLoading: true, error: '' } 
     },
-    logout(state, action) {
-      return { ...state, username: '', password: null, loginOn: null } 
+    loginSuccess(state, action) {
+      return { ...state, isLoading: false, username: action.payload } 
+    },
+    loginError(state, action) {
+      return { ...state, isLoading: false, error: action.payload } 
     }
   }
 })
 
-export const { login, logout } = authSlice.actions;
+export function login(email, password) {
+  return dispatch => {
+    dispatch(loginBegin());
+    apiGet("api/v1/users")
+      .then((response) => {
+        dispatch(loginSuccess(response));
+      })
+      .catch((error) => {
+        dispatch(loginError(error.message));
+      });
+  }
+}
+
+export const { loginBegin, loginSuccess, loginError } = authSlice.actions;
 
 export default authSlice.reducer;
