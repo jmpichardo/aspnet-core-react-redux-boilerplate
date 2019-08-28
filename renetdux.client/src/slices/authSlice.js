@@ -1,10 +1,13 @@
 import { createSlice } from "redux-starter-kit";
 import { apiPost } from "../common/apiUtils";
+import jwtDecode from 'jwt-decode';
 
 const authSlice = createSlice({
   slice: 'auth',
   initialState: {
-    username: '',
+    token: null,
+    userName: '',
+    isAuthenticated: false,
     isLoading: false,
     error: ''
   },
@@ -13,10 +16,18 @@ const authSlice = createSlice({
       return { ...state, isLoading: true, error: '' } 
     },
     loginSuccess(state, action) {
-      return { ...state, isLoading: false, username: action.payload } 
+      return { 
+        ...state, 
+        isLoading: false, 
+        token: action.payload.access_token, 
+        userName: jwtDecode(action.payload.access_token).given_name,
+        isAuthenticated: true } 
     },
     loginError(state, action) {
       return { ...state, isLoading: false, error: action.payload } 
+    },
+    logout(state) {
+      return { ...state, token: null, userName: '', isAuthenticated: false }
     }
   }
 })

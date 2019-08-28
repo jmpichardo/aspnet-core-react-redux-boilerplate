@@ -6,9 +6,17 @@ import './index.scss';
 import App from './containers/app/App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './reducers';
+import { loadState, saveState } from './common/localStorage';
+
+const persistedState = loadState();
 
 const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  preloadedState: persistedState
+});
+
+store.subscribe(() => {
+  saveState({ auth: store.getState().auth });
 });
 
 ReactDOM.render(

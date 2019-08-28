@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const UserGreeting = (props) => {
-  const { username } = props;
-  return <p>Hello {username}</p>
+  const { userName } = props;
+  return <p>Hello {userName}</p>
 }
 
 const AnonymousGreeting = () => {
@@ -11,16 +11,15 @@ const AnonymousGreeting = () => {
 }
 
 const Home = ({ auth }) => {
-  const { username } = auth;
+  const { userName } = auth;
 
   return (
     <div>
-      { username ? 
-        <UserGreeting username={username} />
+      { userName ? 
+        <UserGreeting userName={userName} />
       :
         <AnonymousGreeting />
       }
-      
     </div>
   )
 }
