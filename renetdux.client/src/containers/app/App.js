@@ -5,6 +5,7 @@ import { requireAuthentication } from '../../components/AuthenticatedComponent';
 import Home from '../home/Home';
 import Registration from '../registration/Registration';
 import Login from '../login/Login';
+import UserDetails from '../users/UserDetails';
 import Users from '../users/Users';
 import { logout } from '../../slices/authSlice';
 import './App.scss';
@@ -18,6 +19,7 @@ const App = ({ auth, logout }) => {
         { isAuthenticated ? 
           <div className="nav-bar">
             <div className="nav-bar__item"><Link to="/">Home</Link></div>
+            <div className="nav-bar__item"><Link to="/user">User details</Link></div>
             <div className="nav-bar__item"><Link to="/users">Users</Link></div>
             <div className="nav-bar__item"><button onClick={() => { logout(); }}>Log out</button></div>
           </div>
@@ -33,6 +35,7 @@ const App = ({ auth, logout }) => {
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Registration} />
+          <Route path="/user" component={requireAuthentication(UserDetails)} />
           <Route path="/users" component={requireAuthentication(Users)} />
         </div>
       </div>

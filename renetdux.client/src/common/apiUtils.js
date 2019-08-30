@@ -17,7 +17,7 @@ export default class ApiUtils {
     return headers;
   }
   
-  handleErrors(response) {
+  static handleErrors(response) {
     if (!response.ok) {
       throw Error(response.statusText);
     }
@@ -31,10 +31,12 @@ export default class ApiUtils {
         body: data ? JSON.stringify(data) : null,
         headers: this.getHeaders()
       })
-        .then(this.handleErrors)
+        .then(res => this.handleErrors(res))
         .then(res => res.json())
         .then(
           (result) => {
+            if (result.status === 401)
+              reject(result);
             resolve(result);
           },
           (error) => {

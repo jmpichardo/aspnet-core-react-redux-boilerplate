@@ -7,6 +7,7 @@ const authSlice = createSlice({
   initialState: {
     token: null,
     userName: '',
+    userId: 0,
     isAuthenticated: false,
     isLoading: false,
     error: ''
@@ -16,11 +17,14 @@ const authSlice = createSlice({
       return { ...state, isLoading: true, error: '' } 
     },
     loginSuccess(state, action) {
+      const decodedToken = jwtDecode(action.payload.access_token);
+
       return { 
         ...state, 
         isLoading: false, 
         token: action.payload.access_token, 
-        userName: jwtDecode(action.payload.access_token).given_name,
+        userName: decodedToken.given_name,
+        userId: decodedToken.nameid,
         isAuthenticated: true } 
     },
     loginError(state, action) {
