@@ -1,5 +1,5 @@
 import React from 'react';
-import ApiUtils from '../../common/apiUtils';
+import API from '../../common/apiUtils';
 
 class Users extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Users extends React.Component {
   }
 
   componentDidMount() {
-    ApiUtils.request('get', 'api/v1/users/')
+    API.request('get', 'api/v1/users/')
       .then((response) => {
         this.setState({ users: response });
       })

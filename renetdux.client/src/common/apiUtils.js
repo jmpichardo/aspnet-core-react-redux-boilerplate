@@ -2,7 +2,7 @@ import { loadState } from './localStorage';
 
 let baseUrl = 'http://localhost:52446/';
 
-export default class ApiUtils {
+export default class API {
   static getHeaders() {
     const headers = new Headers();
 

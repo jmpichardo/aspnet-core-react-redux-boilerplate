@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ApiUtils from '../../common/apiUtils';
+import API from '../../common/apiUtils';
 
 class UserDetails extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class UserDetails extends React.Component {
   }
 
   componentDidMount() {
-    ApiUtils.request('get', `api/v1/users/${this.props.auth.userId}`)
+    API.request('get', `api/v1/users/${this.props.auth.userId}`)
       .then((response) => {
         this.setState({ user: response });
       })
