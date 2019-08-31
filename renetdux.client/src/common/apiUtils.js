@@ -18,7 +18,7 @@ export default class API {
   }
   
   static handleErrors(response) {
-    if (!response.ok) {
+    if (!response.ok && response.status !== 400) {
       throw Error(response.statusText);
     }
     return response;
@@ -36,6 +36,8 @@ export default class API {
         .then(
           (result) => {
             if (result.status === 401)
+              reject(result);
+            if (result.errorCode)
               reject(result);
             resolve(result);
           },
