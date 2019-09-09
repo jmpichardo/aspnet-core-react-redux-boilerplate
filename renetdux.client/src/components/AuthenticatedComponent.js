@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 export function requireAuthentication(Component) {
 
   class AuthenticatedComponent extends React.Component {
-    componentWillMount() {
-      this.checkAuth();
-    }
-
-    componentWillReceiveProps(nextProps) {
+    componentDidMount() {
       this.checkAuth();
     }
 

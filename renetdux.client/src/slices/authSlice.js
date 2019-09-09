@@ -6,6 +6,8 @@ const authSlice = createSlice({
   slice: 'auth',
   initialState: {
     token: null,
+    refresh_token: null,
+    expiration: 0,
     userName: '',
     userId: 0,
     isAuthenticated: false,
@@ -20,9 +22,11 @@ const authSlice = createSlice({
       const decodedToken = jwtDecode(action.payload.access_token);
 
       return { 
-        ...state, 
-        isLoading: false, 
-        token: action.payload.access_token, 
+        ...state,
+        isLoading: false,
+        token: action.payload.access_token,
+        refresh_token: action.payload.refresh_token,
+        expiration: decodedToken.exp,
         userName: decodedToken.given_name,
         userId: decodedToken.nameid,
         isAuthenticated: true } 
@@ -31,7 +35,7 @@ const authSlice = createSlice({
       return { ...state, isLoading: false, error: action.payload } 
     },
     logout(state) {
-      return { ...state, token: null, userName: '', isAuthenticated: false }
+      return { ...state, token: null, refresh_token: null, expiration: 0, userName: '', isAuthenticated: false }
     }
   }
 })
@@ -42,8 +46,7 @@ export function login(email, password) {
     API.request('post', 'token', {
       grant_type: 'password',
       username: email,
-      password: password,
-      refresh_token: ""
+      password: password
     })
       .then((response) => {
         dispatch(loginSuccess(response));
