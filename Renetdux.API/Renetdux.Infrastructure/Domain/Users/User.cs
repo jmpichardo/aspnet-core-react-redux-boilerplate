@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Renetdux.Infrastructure.Domain.Photos;
 using Renetdux.Infrastructure.Services.Encryption;
+using System;
 using System.Collections.Generic;
 
 namespace Renetdux.Infrastructure.Domain.Users
@@ -33,6 +34,11 @@ namespace Renetdux.Infrastructure.Domain.Users
             LastName = lastName;
             Password = EncryptionService.HashPassword(password);
             UserRole = UserRoles.Basic;
+        }
+
+        public void GenerateRefreshToken()
+        {
+            RefreshToken = Guid.NewGuid().ToString("N");
         }
     }
 }

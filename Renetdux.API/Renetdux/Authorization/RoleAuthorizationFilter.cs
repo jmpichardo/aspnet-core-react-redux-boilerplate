@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Renetdux.Infrastructure.Domain.Users;
+using System;
 using System.Linq;
 using System.Security.Claims;
 
 namespace Renetdux.Authorization
 {
-    public class CompanyAuthorizationFilter : IAuthorizationFilter
+    public class RoleAuthorizationFilter : IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -21,6 +22,20 @@ namespace Renetdux.Authorization
                 if (adminUserRoleTypes != null && adminUserRoleTypes.Any())
                 {
                     var claims = context.HttpContext.User.Claims;
+
+                    var expirationDateEpoch = claims.FirstOrDefault(x => x.Type == "exp")?.Value;
+                    if(expirationDateEpoch == null)
+                    {
+                        context.Result = new UnauthorizedResult();
+                        return;
+                    }
+
+                    var expirationDateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expirationDateEpoch)).UtcDateTime;
+                    if(expirationDateTime < DateTime.UtcNow)
+                    {
+                        context.Result = new UnauthorizedResult();
+                        return;
+                    }
 
                     var roleJsonFromClaims = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
                     if (roleJsonFromClaims == null)

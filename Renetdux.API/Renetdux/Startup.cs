@@ -42,7 +42,7 @@ namespace Renetdux
 
             services.AddMvc(x =>
             {
-                x.Filters.Add<CompanyAuthorizationFilter>();
+                x.Filters.Add<RoleAuthorizationFilter>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var secret = config.JwtSecret;

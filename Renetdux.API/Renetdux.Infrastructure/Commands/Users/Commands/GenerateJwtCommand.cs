@@ -3,6 +3,7 @@ using Renetdux.Infrastructure.Commands.Users.Interfaces;
 using Renetdux.Infrastructure.Commands.Users.Models;
 using Renetdux.Infrastructure.Common;
 using Renetdux.Infrastructure.Domain.Users;
+using Renetdux.Infrastructure.Repositories;
 using Renetdux.Infrastructure.Repositories.Users;
 using Renetdux.Infrastructure.Services.Encryption;
 using System;
@@ -19,12 +20,18 @@ namespace Renetdux.Infrastructure.Commands.Users.Commands
 
         private readonly Configuration _configuration;
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IEncryptionService _encryptionService;
 
-        public GenerateJwtCommand(Configuration configuration, IUserRepository userRepository, IEncryptionService encryptionService)
+        public GenerateJwtCommand(
+            Configuration configuration, 
+            IUserRepository userRepository, 
+            IUnitOfWork unitOfWork,
+            IEncryptionService encryptionService)
         {
             _configuration = configuration;
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _encryptionService = encryptionService;
         }
 
@@ -45,6 +52,9 @@ namespace Renetdux.Infrastructure.Commands.Users.Commands
                 return new CommandResult<TokenDTO>(ErrorCodes.User_Login_Invalid_Password.ToString(), "Invalid Password");
 
             var token = GenerateToken(user);
+            
+            user.GenerateRefreshToken();
+            await _unitOfWork.CommitAsync();
 
             return new CommandResult<TokenDTO>(new TokenDTO(token, user.RefreshToken, C_EXPIRES_IN_SECONDS));
         }
@@ -59,6 +69,9 @@ namespace Renetdux.Infrastructure.Commands.Users.Commands
                 return new CommandResult<TokenDTO>(ErrorCodes.User_Login_Invalid_RefreshToken.ToString(), "Invalid Refresh Token");
 
             var token = GenerateToken(user);
+
+            user.GenerateRefreshToken();
+            await _unitOfWork.CommitAsync();
 
             return new CommandResult<TokenDTO>(new TokenDTO(token, user.RefreshToken, C_EXPIRES_IN_SECONDS));
         }
