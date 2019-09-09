@@ -4,7 +4,7 @@ import API from '../../common/apiUtils';
 
 const Registration = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [resultMessage, setResultMessage] = useState('');
 
   const [emailText, setEmailText] = useState('');
   const onChangeEmail = e => setEmailText(e.target.value);
@@ -35,11 +35,11 @@ const Registration = () => {
                 setFirstNameText('');
                 setLastNameText('');
                 setPasswordText('');
-                setError('SUCCESS!');
+                setResultMessage('SUCCESS!');
                 setIsLoading(false);
               })
               .catch((error) => {
-                setError(error.message);
+                setResultMessage(error.message);
                 setIsLoading(false);
               });
             
@@ -62,8 +62,8 @@ const Registration = () => {
         </div>
         <button type="submit" disabled={isLoading}>{ isLoading ? <span>Loading</span> : <span>Sign up</span> }</button>
 
-        { error && 
-            <div>Error: {error}</div>
+        { resultMessage && 
+            <div>{resultMessage}</div>
           }
       </form>
     </div>
