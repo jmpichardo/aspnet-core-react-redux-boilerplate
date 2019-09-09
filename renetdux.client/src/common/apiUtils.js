@@ -1,6 +1,6 @@
 import { loadState } from './localStorage';
 
-let baseUrl = 'http://localhost:52446/';
+let baseUrl = 'http://localhost:5000/';
 
 export default class API {
   static getHeaders() {
