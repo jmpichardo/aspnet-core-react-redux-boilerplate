@@ -2,6 +2,7 @@
 [Bb]in/
 packages/
 .vs/
+.vscode/
 .idea/
 node_modules/\nbower_components/
 *.user
