@@ -1,12 +1,12 @@
-# ASP.Net Core with React & Redux boilerplate
+# ASP.NET Core with React & Redux boilerplate
 
-Boilerplate solution for ASP.Net Core API + React + Redux including user authentication.
+Boilerplate solution for ASP.NET Core API + React + Redux including user authentication.
 
 This solution contains two projects for back-end and front-end with small implementation of few endpoints and pages to showcase the registration, login and role authentication processes using JWT tokens.
 
 ### Requirements
 
-- [.Net Core 2.2 SDK](https://dotnet.microsoft.com/download)
+- [.NET Core 2.2 SDK](https://dotnet.microsoft.com/download)
 - [NodeJS](https://nodejs.org/en/)
 
 
@@ -35,7 +35,7 @@ npm start
 
 ## Back-end
 
-The RESTful API for back-end has been done using ASP.Net Core 2.2.
+The RESTful API for back-end has been done using ASP.NET Core 2.2.
 
 For the data management the project uses Entity Framework Core with the in memory database using [Code First](https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/workflows/new-database) approach. Replacing this by a real database connection should be straight forward.
 
