@@ -39,7 +39,7 @@ The RESTful API for back-end has been done using ASP.Net Core 2.2.
 
 For the data management the project uses Entity Framework Core with the in memory database using [Code First](https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/workflows/new-database) approach. Replacing this by a real database connection should be straight forward.
 
-[Entity Type Configurations](https://docs.microsoft.com/en-us/dotnet/api/system.data.entity.modelconfiguration.entitytypeconfiguration-1?view=entity-framework-6.2.0) has being userd for the definition of database models. 
+[Entity Type Configurations](https://docs.microsoft.com/en-us/dotnet/api/system.data.entity.modelconfiguration.entitytypeconfiguration-1?view=entity-framework-6.2.0) has being used for the definition of database models. 
 For each model is recommended to generate and add in the database context class his own configuration file.
 
 User configuration example:
@@ -63,13 +63,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
 For the authentication [JWT token](https://jwt.io/) approach has been used.
 
-The implentation is a bit custom using a role system to give different levels of authorization to the endpoints.
+The implementation is a bit custom using a role system to give different levels of authorization to the endpoints.
 
 Also, the refresh token mechanism is included in the project.
 
 ### Layers
 
-The code structure implementes a kind of DDD (Domain Driven Design) but in a very custom and personal approach.
+The code structure implements a kind of DDD (Domain Driven Design) but in a very custom and personal approach.
 
 The different layers of the back-end project are separated and connected as follows:
 
@@ -91,7 +91,7 @@ The Commands contain the business logic of the application. They can use Service
 
 #### Services
 
-Pieces of code implementing something very specific but at the same reusable and generic for any situtation. They are not usually related with any specific business logic. Here we can also include integrations with third party APIs.
+Pieces of code implementing something very specific but at the same reusable and generic for any situation. They are not usually related with any specific business logic. Here we can also include integrations with third party APIs.
 
 Some examples of services could be encryption methods, third party API integration for sending SMS messages, or complex math calculations.
 
@@ -103,7 +103,7 @@ Data Repositories is the layer responsible of data management. They must be used
 
 Domain Objects are our data representation. They have some restrictions and protected properties to apply security about how to use them.
 
-Often they are our the database entities also but they don't need to always neccesary be our persistent data representation. They can be used to define our business flowing data.
+Often, they are our the database entities also but they don't need to always necessary be our persistent data representation. They can be used to define our business flowing data.
 
 ### Unit test
 
@@ -122,7 +122,7 @@ Also, [React-router](https://www.npmjs.com/package/react-router) and [Sass](http
 ### Authentication
 
 The **authSlice** file contains the reducers about login credentials.
-To keep the token credentials through the different browser sessions, the project create a subscription of  authSlice state to store the data in the local storage and reading later using persisted states.
+To keep the token credentials through the different browser sessions, the project creates a subscription of authSlice state to store the data in the local storage and reading later using persisted states.
 
 ```javascript
 const persistedState = loadState();
